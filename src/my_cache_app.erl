@@ -8,7 +8,7 @@ start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile(
 		[
 			{'_', [
-				{"/api/cache_server", cache_server, []}
+				{"/api/cache_server", my_cache_server, []}
 				]
 			}
 		]

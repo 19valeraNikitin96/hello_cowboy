@@ -66,7 +66,6 @@ handle_cast({?DELETE,Method},#my_cache_state{dets_id = Dets_ID} = State) ->
   spawn(my_cache_impl,?DELETE,[Method,Dets_ID]),
   {noreply, State};
 handle_cast(_Request, State) ->
-%%  io:format("~w~n", [State]),
   {noreply, State}.
 
 %% @private
