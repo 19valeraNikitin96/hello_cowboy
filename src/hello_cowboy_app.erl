@@ -9,7 +9,9 @@ start(_Type, _Args) ->
 		[
 			{'_', [
 				{"/hello", hello_handler, []},
-				{"/api/cache_server", cache_server, []}]
+				{"/api/cache_server", cache_server, []},
+				{"/test1", post_test, []}
+				]
 			}
 		]
 	),
