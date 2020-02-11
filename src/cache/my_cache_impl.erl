@@ -33,7 +33,7 @@ lookup(DateFrom,DateTo,Dets_ID)->
     calendar:datetime_to_gregorian_seconds({{FYear-1970, (FMonth), (FDay)},{(FHours), (FMinutes), (FSeconds)}}),
   TS =
     calendar:datetime_to_gregorian_seconds({{TYear-1970, (TMonth), (TDay)},{(THours), (TMinutes), (TSeconds)}}),
-  Ret = lists:filter(fun(X) -> {_,_,EndDate} = X,io:format("~w~n", [EndDate]), EndDate >= FS andalso EndDate =< TS end,
+  Ret = lists:filter(fun(X) -> {_,_,EndDate} = X, EndDate >= FS andalso EndDate =< TS end,
   all_records_from(Dets_ID)),lists:flatmap(fun(X)->{_,V,_}=X, [V] end, Ret).
 
 %% MINOR FUNCTIONS
