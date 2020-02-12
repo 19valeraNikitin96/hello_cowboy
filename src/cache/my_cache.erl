@@ -48,9 +48,8 @@ handle_call(
   Res = my_cache_impl:insert(Dets_ID,{Key,Value,TimeValue+erlang:system_time('second')}),
   {reply, ok,#my_cache_state{dets_id = Dets_ID, result = Res}};
 handle_call({?INSERT,Key,Value},From,State) ->
-  handle_call({?INSERT,Key,Value,3600},From,State);
-handle_call({?LOOKUP,Key},_From,#my_cache_state{dets_id=Dets_ID})
-  ->
+  handle_call({?INSERT,Key,Value,60},From,State);
+handle_call({?LOOKUP,Key},_From,#my_cache_state{dets_id=Dets_ID}) ->
   Result = my_cache_impl:lookup(Dets_ID,Key),
   Return = #my_cache_state{dets_id = Dets_ID,result = Result},
   {reply,Return,#my_cache_state{dets_id=Dets_ID}};

@@ -11,6 +11,10 @@
 -include("header.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
+start_test()->
+%%  gen_server:start()
+  my_cache:start_link().
+
 insert_test()->
   my_cache:start_link(),
   ?assertEqual(ok,my_cache:insert("TestKey1","TestValue1",0)).
@@ -31,3 +35,6 @@ fourth_test()->
   my_cache:insert("TestKey1","TestValue1",-1),
   my_cache:delete_obsolete(?NONSTANDARD),
   ?assertEqual({my_cache_state,"cache_dets.file",{ok,[]}},my_cache:lookup("TestKey1")).
+
+end_test()->
+  gen_server:stop(my_cache).
