@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 10. Feb 2020 12:46
 %%%-------------------------------------------------------------------
--module(cache_server).
+-module(my_cache_server).
 -author("erlang").
 -include("header.hrl").
 %% API

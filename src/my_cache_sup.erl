@@ -1,4 +1,4 @@
--module(hello_cowboy_sup).
+-module(my_cache_sup).
 -behaviour(supervisor).
 
 -export([start_link/0]).

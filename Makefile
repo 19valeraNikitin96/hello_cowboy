@@ -1,4 +1,4 @@
-PROJECT = hello_cowboy
+PROJECT = my_cache
 PROJECT_DESCRIPTION = New project
 PROJECT_VERSION = 0.1.0
 

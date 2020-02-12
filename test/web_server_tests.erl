@@ -11,21 +11,41 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
-%%first_test() ->
-%%  hello_cowboy_app:start(undefined,undefined).
-%%  inets:start(),
-%%  Method = post,
-%%  URL = "http://localhost:8080/api/cache_server",
-%%  Header = [{<<"Accept">>,<<"application/json">>}],
-%%  Type = "application/json",
-%%  Body = "{
-%%    \"action\": \"insert\",
-%%    \"key\": 11349,
-%%    \"value\": 1149
-%%  }",
-%%  HTTPOptions = [],
-%%  Options = [],
-%%  R = httpc:request(Method, {URL, Header, Type, Body}, HTTPOptions, Options),
-%%  {ok, {{"HTTP/1.1", ReturnCode, _State}, _Head, _RBody}} = R,
-%%  ?assertEqual(200, ReturnCode).
-%%  ?assertEqual("{\"result\": \"ok\"}",Body).
+start_test()->
+  application:ensure_all_started(my_cache),
+  inets:start().
+
+first_test() ->
+  Body = "{
+    \"action\": \"insert\",
+    \"key\": 11349,
+    \"value\": 1149
+  }",
+  R = httpc:request(post,{"http://localhost:8080/api/cache_server", [],"application/json",Body},[],[]),
+  {ok, {{"HTTP/1.1", ReturnCode, _State}, _Head, RBody}} = R,
+  ?assertEqual(200, ReturnCode),
+  ?assertEqual("{\"result\":\"ok\"}", RBody).
+
+second_test()->
+  Body = "{
+    \"action\": \"lookup\",
+    \"key\": 11349
+    }",
+  R = httpc:request(post,{"http://localhost:8080/api/cache_server", [],"application/json",Body},[],[]),
+  {ok, {{"HTTP/1.1", ReturnCode, _State}, _Head, RBody}} = R,
+  ?assertEqual(200, ReturnCode),
+  ?assertEqual("{\"result\":1149}", RBody).
+
+third_test()->
+  Body2 = "{
+    \"action\": \"lookup\",
+    \"key\": \"abrakadabra\"
+    }",
+  R = httpc:request(post,{"http://localhost:8080/api/cache_server", [],"application/json",Body2},[],[]),
+  {ok, {{"HTTP/1.1", ReturnCode, _State}, _Head, RBody}} = R,
+  ?assertEqual(200, ReturnCode),
+  ?assertEqual("{\"result\":\"undefined\"}", RBody).
+
+end_test()->
+  application:stop(my_cache).
+
